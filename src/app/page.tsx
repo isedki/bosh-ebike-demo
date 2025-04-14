@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from 'react';
 
 export default function ProductPage() {
-  const [data, setData] = useState(null);
+  
+const [data, setData] = useState<ProductPageData | null>(null);
+
 
   useEffect(() => {
     async function fetchData() {
