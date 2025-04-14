@@ -2,10 +2,42 @@
 
 import React, { useEffect, useState } from 'react';
 
-export default function ProductPage() {
-  
-const [data, setData] = useState<ProductPageData | null>(null);
+type ProductPageData = {
+  title: string;
+  heroTitle: string;
+  heroText: string;
+  heroImage: { url: string };
+  body: { html: string };
+  gallery: { url: string }[];
+  featureHighlight: {
+    title: string;
+    text: { html: string };
+    ctatext?: string;
+    ctalink?: string;
+    image?: { url: string };
+  };
+  productSpecification: {
+    label: string;
+    icon?: { url: string };
+    valueImperial: string;
+    valueMetric: string;
+  }[];
+  downloads: {
+    label: string;
+    file: { url: string };
+    language: string;
+  }[];
+  countryVariants: {
+    country: string;
+    recyclingSchedule: string | { title: string; note: string; schedule: { item: string; day: string }[] };
+    localizedContent: {
+      html: string;
+    };
+  }[];
+};
 
+export default function ProductPage() {
+  const [data, setData] = useState<ProductPageData | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,55 +54,34 @@ const [data, setData] = useState<ProductPageData | null>(null);
             query: `
               query GetProductPage {
                 productPage(where: { slug: "purion-400" }, stage: DRAFT) {
-  title
-  heroTitle
-  heroText
-  heroImage {
-    url
-  }
-  body {
-    html
-  }
-  gallery {
-    url
-  }
-  featureHighlight {
-    title
-    text {
-      html
-    }
-    ctatext
-    ctalink
-    image {
-      url
-    }
-  }
-  countryVariants {
-    country
-    localizedContent {
-      html
-    }
-    recyclingSchedule
-  }
-  downloads {
-    label
-    file {
-      url
-    }
-    language
-  }
-  productSpecification {
-    icon {
-      url
-    }
-    label
-    valueImperial
-    valueMetric
-  }
-  downloads {
+                  title
+                  heroTitle
+                  heroText
+                  heroImage { url }
+                  body { html }
+                  gallery { url }
+                  featureHighlight {
+                    title
+                    text { html }
+                    ctatext
+                    ctalink
+                    image { url }
+                  }
+                  countryVariants {
+                    country
+                    recyclingSchedule
+                    localizedContent { html }
+                  }
+                  downloads {
                     label
                     file { url }
                     language
+                  }
+                  productSpecification {
+                    icon { url }
+                    label
+                    valueImperial
+                    valueMetric
                   }
                 }
               }
@@ -160,7 +171,7 @@ const [data, setData] = useState<ProductPageData | null>(null);
         </section>
       )}
 
-<section className="py-16 px-6 bg-white">
+      <section className="py-16 px-6 bg-white">
         <h2 className="text-2xl font-semibold text-center mb-8">Specifications</h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {data.productSpecification?.map((spec, i) => (
@@ -189,7 +200,19 @@ const [data, setData] = useState<ProductPageData | null>(null);
                 className="prose text-sm"
                 dangerouslySetInnerHTML={{ __html: v.localizedContent?.html || '' }}
               />
-              <p className="mt-2 text-gray-500">Schedule: {v.recyclingSchedule}</p>
+              {typeof v.recyclingSchedule === 'string' ? (
+  <p className="mt-2 text-gray-500">Schedule: {v.recyclingSchedule}</p>
+) : (
+  <div className="mt-2 text-gray-500">
+    <h5 className="font-semibold">{v.recyclingSchedule.title}</h5>
+    <ul className="list-disc list-inside">
+      {v.recyclingSchedule.schedule.map((entry, idx) => (
+        <li key={idx}>{entry.item}: {entry.day}</li>
+      ))}
+    </ul>
+    <p className="text-sm italic mt-2">{v.recyclingSchedule.note}</p>
+  </div>
+)}
             </div>
           ))}
         </div>
