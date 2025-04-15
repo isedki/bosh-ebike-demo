@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { RichText } from '@graphcms/rich-text-react-renderer';
 import { RichTextContent } from '@graphcms/rich-text-types';
 
+// Bosch logo (hosted externally or locally in your project)
+const BOSCH_LOGO = "https://upload.wikimedia.org/wikipedia/commons/0/01/Bosch-logo.svg";
+
 type ProductPageData = {
   title: string;
   heroTitle: string;
@@ -111,6 +114,15 @@ export default function ProductPage() {
 
   return (
     <>
+      {/* Navigation Bar */}
+      <header className="bg-white shadow py-4 px-6 flex items-center justify-between">
+        <img src={BOSCH_LOGO} alt="Bosch Logo" className="h-10" />
+        <nav className="space-x-6 font-medium">
+          <a href="#" className="text-gray-700 hover:text-black">Products</a>
+          <a href="#" className="text-gray-700 hover:text-black">Technology</a>
+          <a href="#" className="text-gray-700 hover:text-black">Support</a>
+        </nav>
+      </header>
       <div className="text-center py-4">
         <label className="mr-2 font-medium">Select Language:</label>
 <select
@@ -282,6 +294,18 @@ export default function ProductPage() {
   </section>
 )}
     </div>
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white text-sm py-6 px-6 mt-16">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
+          <p>&copy; {new Date().getFullYear()} Bosch eBike Systems. All rights reserved.</p>
+          <div className="space-x-4">
+            <a href="#" className="hover:underline">Privacy Policy</a>
+            <a href="#" className="hover:underline">Terms of Service</a>
+            <a href="#" className="hover:underline">Contact</a>
+          </div>
+        </div>
+      </footer>
+
     </>
   );
 }
