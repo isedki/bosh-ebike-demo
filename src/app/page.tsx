@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { RichText } from '@graphcms/rich-text-react-renderer';
-
+import { RichTextContent } from '@graphcms/rich-text-types';
 
 type ProductPageData = {
   title: string;
   heroTitle: string;
   heroText: string;
   heroImage: { url: string };
-  body: { raw: any };
+  body: { raw: RichTextContent };
   gallery: { url: string }[];
   featureHighlight: {
     title: string;
