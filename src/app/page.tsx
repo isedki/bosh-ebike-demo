@@ -5,7 +5,7 @@ import { RichText } from '@graphcms/rich-text-react-renderer';
 import { RichTextContent } from '@graphcms/rich-text-types';
 
 // Bosch logo (hosted externally or locally in your project)
-const BOSCH_LOGO = "https://upload.wikimedia.org/wikipedia/commons/0/01/Bosch-logo.svg";
+const BOSCH_LOGO = "Bosch-logo-simple.svg";
 
 type ProductPageData = {
   title: string;
