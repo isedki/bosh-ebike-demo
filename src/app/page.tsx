@@ -29,6 +29,7 @@ type ProductPageData = {
     file: { url: string };
     language: string;
   }[];
+  sharedRecyclingInfo: { raw: RichTextContent };
   countryVariants: {
     country: string;
     recyclingSchedule: string | { title: string; note: string; schedule: { item: string; day: string }[] };
@@ -41,6 +42,8 @@ type ProductPageData = {
 export default function ProductPage() {
   const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>('de');
   const [data, setData] = useState<ProductPageData | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<'fr' | 'de'>('de');
+
 
   useEffect(() => {
     async function fetchData() {
@@ -79,6 +82,7 @@ export default function ProductPage() {
                     file { url }
                     language
                   }
+                  sharedRecyclingInfo { raw }
                   productSpecification {
                     icon { url }
                     label
@@ -121,6 +125,18 @@ export default function ProductPage() {
           <option value="it">Italiano</option>
         </select>
       </div>
+<div className="text-center py-4">
+        <label className="mr-2 font-medium">Select Country:</label>
+        <select
+          value={selectedCountry}
+          onChange={(e) => setSelectedCountry(e.target.value as 'fr' | 'de')}
+          className="border px-2 py-1 rounded"
+        >
+          <option value="de">Germany</option>
+          <option value="fr">France</option>
+        </select>
+      </div>
+
       <div className="font-sans text-gray-900">
       <section className="bg-black text-white py-20 px-6 text-center">
         <h1 className="text-4xl font-bold mb-2">{data.heroTitle}</h1>
@@ -200,35 +216,46 @@ export default function ProductPage() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-gray-100">
-        <h2 className="text-2xl font-semibold text-center mb-8">Recycling Info by Region</h2>
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {data.countryVariants.map((v, i) => (
-            <div key={i} className="bg-white p-6 rounded shadow text-sm">
-              <h4 className="text-lg font-bold mb-2 uppercase">{v.country}</h4>
-              <div
-                className="prose text-sm"
-                dangerouslySetInnerHTML={{ __html: v.localizedContent?.html || '' }}
-              />
-              {typeof v.recyclingSchedule === 'string' ? (
-                <p className="mt-2 text-gray-500">Schedule: {v.recyclingSchedule}</p>
-              ) : (
-                <div className="mt-2 text-gray-500">
-                  <h5 className="font-semibold">{v.recyclingSchedule.title}</h5>
-                  <ul className="list-disc list-inside">
-                    {v.recyclingSchedule.schedule.map((entry, idx) => (
-                      <li key={idx}>
-                        {entry.item}: {entry.day}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-sm italic mt-2">{v.recyclingSchedule.note}</p>
+      <div className="font-sans text-gray-900">
+        <section className="py-16 px-6 bg-gray-100">
+          <h2 className="text-2xl font-semibold text-center mb-8">Recycling Info by Region</h2>
+
+          
+            <div className="prose text-sm max-w-4xl mx-auto mb-10">
+            <RichText content={data.sharedRecyclingInfo.raw} />
+              </div>
+          
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {data.countryVariants
+              .filter((v) => v.country.toLowerCase().includes(selectedCountry))
+              .map((v, i) => (
+                <div key={i} className="bg-white p-6 rounded shadow text-sm">
+                  <h4 className="text-lg font-bold mb-2 uppercase">{v.country}</h4>
+                  <div
+                    className="prose text-sm"
+                    dangerouslySetInnerHTML={{ __html: v.localizedContent?.html || '' }}
+                  />
+                  {typeof v.recyclingSchedule === 'string' ? (
+                    <p className="mt-2 text-gray-500">Schedule: {v.recyclingSchedule}</p>
+                  ) : (
+                    <div className="mt-2 text-gray-500">
+                      <h5 className="font-semibold">{v.recyclingSchedule.title}</h5>
+                      <ul className="list-disc list-inside">
+                        {v.recyclingSchedule.schedule.map((entry, idx) => (
+                          <li key={idx}>
+                            {entry.item}: {entry.day}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="text-sm italic mt-2">{v.recyclingSchedule.note}</p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
+              ))}
+          </div>
+        </section>
+      </div>
 
       {data.downloads?.length > 0 && (
   <section className="py-16 px-6 max-w-6xl mx-auto">
