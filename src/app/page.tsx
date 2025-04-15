@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { RichText } from '@graphcms/rich-text-react-renderer';
+
 
 type ProductPageData = {
   title: string;
   heroTitle: string;
   heroText: string;
   heroImage: { url: string };
-  body: { html: string };
+  body: { raw: any };
   gallery: { url: string }[];
   featureHighlight: {
     title: string;
@@ -37,6 +39,7 @@ type ProductPageData = {
 };
 
 export default function ProductPage() {
+  const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>('de');
   const [data, setData] = useState<ProductPageData | null>(null);
 
   useEffect(() => {
@@ -51,13 +54,13 @@ export default function ProductPage() {
           },
           body: JSON.stringify({
             query: `
-              query GetProductPage {
-                productPage(where: { slug: "purion-400" }, stage: DRAFT) {
+              query GetProductPage($locale: Locale!) {
+                productPage(where: { slug: "purion-400" }, stage: DRAFT, locales: [$locale]) {
                   title
                   heroTitle
                   heroText
                   heroImage { url }
-                  body { html }
+                  body { raw }
                   gallery { url }
                   featureHighlight {
                     title
@@ -85,33 +88,54 @@ export default function ProductPage() {
                 }
               }
             `,
+            variables: { locale }
           }),
         }
       );
 
       const json = await res.json();
       console.log(json);
-      setData(json.data?.productPage);
+      if (json.data?.productPage) {
+        setData(json.data.productPage as ProductPageData);
+      }
     }
 
     fetchData();
-  }, []);
+ }, [locale]);
 
   if (!data) return <div className="p-10 text-center">Loading preview…</div>;
 
   return (
-    <div className="font-sans text-gray-900">
+    <>
+      <div className="text-center py-4">
+        <label className="mr-2 font-medium">Select Language:</label>
+        <select
+          value={locale}
+          onChange={(e) => setLocale(e.target.value as any)}
+          className="border px-2 py-1 rounded"
+        >
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+          <option value="fr">Français</option>
+          <option value="it">Italiano</option>
+        </select>
+      </div>
+      <div className="font-sans text-gray-900">
       <section className="bg-black text-white py-20 px-6 text-center">
         <h1 className="text-4xl font-bold mb-2">{data.heroTitle}</h1>
         <p className="text-lg max-w-3xl mx-auto mb-6">{data.heroText}</p>
         {data.heroImage?.url && (
-          <img src={data.heroImage.url} alt="Hero" className="mx-auto max-w-4xl rounded shadow-lg" />
+          <div className="mx-auto w-full max-w-3xl h-72 overflow-hidden rounded shadow-lg">
+  <img src={data.heroImage.url} alt="Hero" className="w-full h-full object-cover" />
+</div>
         )}
       </section>
 
       <section className="py-12 px-6 max-w-3xl mx-auto">
-        <div className="prose prose-lg" dangerouslySetInnerHTML={{ __html: data.body?.html || '' }} />
-      </section>
+  <div className="prose prose-lg">
+    <RichText content={data.body.raw.children} />
+  </div>
+</section>
 
       {data.gallery?.length > 0 && (
         <section className="bg-gray-100 py-12 px-6">
@@ -205,28 +229,31 @@ export default function ProductPage() {
         </div>
       </section>
 
-      <section className="py-16 px-6 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-semibold text-center mb-8">Downloads</h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {data.downloads.map((doc, i) => (
-            <a
-              key={i}
-              href={doc.file?.url || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block p-4 rounded-lg bg-white shadow text-center hover:shadow-md border border-gray-100 transition"
-            >
-              <div className="flex flex-col items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-blue-500 mb-2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4m-8 6h8a2 2 0 002-2V7a2 2 0 00-2-2h-1" />
-                </svg>
-                <p className="font-medium text-blue-700 mb-1">{doc.label}</p>
-                <p className="text-xs text-gray-500">{doc.language}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
+      {data.downloads?.length > 0 && (
+  <section className="py-16 px-6 max-w-6xl mx-auto">
+    <h2 className="text-2xl font-semibold text-center mb-8">Downloads</h2>
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {data.downloads.map((doc, i) => (
+        <a
+          key={i}
+          href={doc.file?.url || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block p-4 rounded-lg bg-white shadow text-center hover:shadow-md border border-gray-100 transition"
+        >
+          <div className="flex flex-col items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-blue-500 mb-2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4m-8 6h8a2 2 0 002-2V7a2 2 0 00-2-2h-1" />
+            </svg>
+            <p className="font-medium text-blue-700 mb-1">{doc.label}</p>
+            <p className="text-xs text-gray-500">{doc.language}</p>
+          </div>
+        </a>
+      ))}
     </div>
+  </section>
+)}
+    </div>
+    </>
   );
 }
