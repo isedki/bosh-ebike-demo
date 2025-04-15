@@ -133,7 +133,7 @@ export default function ProductPage() {
 
       <section className="py-12 px-6 max-w-3xl mx-auto">
   <div className="prose prose-lg">
-    <RichText content={data.body.raw.children} />
+    <RichText content={data.body.raw} />
   </div>
 </section>
 
