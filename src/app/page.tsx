@@ -109,11 +109,12 @@ export default function ProductPage() {
     <>
       <div className="text-center py-4">
         <label className="mr-2 font-medium">Select Language:</label>
-        <select
-          value={locale}
-          onChange={(e) => setLocale(e.target.value as any)}
-          className="border px-2 py-1 rounded"
-        >
+<select
+  value={locale}
+  onChange={(e) => setLocale(e.target.value as 'en' | 'de' | 'fr' | 'it')}
+  className="border px-2 py-1 rounded"
+>
+
           <option value="en">English</option>
           <option value="de">Deutsch</option>
           <option value="fr">Français</option>
