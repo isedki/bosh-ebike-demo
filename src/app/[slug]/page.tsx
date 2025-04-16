@@ -94,11 +94,13 @@ export default function ProductPage({ params }: Props) {
       <div className="font-sans text-gray-900">
         <HeroBanner heroTitle={data.heroTitle} heroText={data.heroText} heroImage={data.heroImage} />
 
-        <section className="py-12 px-6 max-w-3xl mx-auto">
-          <div className="prose prose-lg">
-            <RichText content={data.body.raw} />
-          </div>
-        </section>
+        {data.body?.raw && Object.keys(data.body.raw).length > 0 && (
+          <section className="py-12 px-6 max-w-3xl mx-auto">
+            <div className="prose prose-lg">
+              <RichText content={data.body.raw} />
+            </div>
+          </section>
+        )}
 
         <Gallery images={data.gallery} />
 
