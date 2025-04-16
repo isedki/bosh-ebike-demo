@@ -29,9 +29,15 @@ const [navigationLinks, setNavigationLinks] = useState<{ title: string; slug: st
           `,
         }),
       });
-      const navJson = await navRes.json();
-      const navItems = navJson.data?.navigations?.[0]?.navigationLinks || [];
-      setNavigationLinks(navItems.map((link: any) => link.productPage));
+     const navJson = await navRes.json();
+     const navBlock = navJson.data?.navigations?.[0];
+     
+     const navItems = navBlock?.navigationLinks || [];
+     setNavigationLinks(navItems.map((link: any) => link.productPage));
+     
+     // ✅ Set the label from navigationId
+     setNavigationLabel(navBlock?.navigationId || 'Products');
+
     }
     fetchNavigation();
   }, []);
