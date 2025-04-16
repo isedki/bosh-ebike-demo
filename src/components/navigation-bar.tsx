@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+
 
 const BOSCH_LOGO = "Bosch-logo-simple.svg";
 const SUPERGRAPHIC = "supergraphic.svg";
