@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const BOSCH_LOGO = "Bosch-logo-simple.svg";
 const SUPERGRAPHIC = "supergraphic.svg";
