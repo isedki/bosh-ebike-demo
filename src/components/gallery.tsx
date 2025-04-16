@@ -27,7 +27,7 @@ export default function Gallery({ images, title }: GalleryProps) {
   }));
 
   return (
-    <section className="bg-gray-100 py-12 px-6">
+    <section className="bg-white py-12 px-6">
       <div className="max-w-7xl mx-auto">
         {title && <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{title}</h2>}
         <div className="grid grid-cols-4 gap-4">
@@ -44,7 +44,10 @@ export default function Gallery({ images, title }: GalleryProps) {
               className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
               loading="eager"
               decoding="async"
-              style={{ imageRendering: 'crisp-edges', WebkitFontSmoothing: 'antialiased' }}
+              style={{ 
+                WebkitFontSmoothing: 'antialiased',
+                backfaceVisibility: 'hidden'
+              }}
             />
           </div>
           
@@ -63,7 +66,11 @@ export default function Gallery({ images, title }: GalleryProps) {
                 className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
                 loading="lazy"
                 decoding="async"
-                style={{ imageRendering: 'crisp-edges', WebkitFontSmoothing: 'antialiased' }}
+                style={{ 
+                  imageRendering: 'smooth',
+                  WebkitFontSmoothing: 'antialiased',
+                  backfaceVisibility: 'hidden'
+                }}
               />
             </div>
           ))}
