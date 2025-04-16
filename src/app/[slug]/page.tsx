@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { RichText } from '@graphcms/rich-text-react-renderer';
 import { RichTextContent } from '@graphcms/rich-text-types';
-import GetProductPageQuery from '@/lib/queries/product-page.gql';
+import GetProductPageQuery from '@/lib/queries/product-page';
 import { fetcher } from '@/lib/utils';
 import NavigationBar from '@/components/navigation-bar';
 import { ContextSelector } from '@/components/context-selector';
