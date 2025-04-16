@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { RichText } from '@graphcms/rich-text-react-renderer';
 import { RichTextContent } from '@graphcms/rich-text-types';
+import GetProductPageQuery from '@/lib/queries/product-page.gql';
+import { fetcher } from '@/lib/utils';
 
 // Bosch logo (hosted externally or locally in your project)
 const BOSCH_LOGO = "Bosch-logo-simple.svg";
@@ -42,65 +44,22 @@ type ProductPageData = {
   }[];
 };
 
-export default function ProductPage() {
-  const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>('de');
-  const [data, setData] = useState<ProductPageData | null>(null);
-  const [selectedCountry, setSelectedCountry] = useState<'fr' | 'de'>('de');
+type Props = {
+  params: {
+    slug: string;
+  };
+};
 
+export default function ProductPage({ params: { slug } }: Props) {
+  const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>('de');
+  const [selectedCountry, setSelectedCountry] = useState<'fr' | 'de'>('de');
+  const [data, setData] = useState<ProductPageData | null>(null);
+
+  console.log(slug);
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(
-        'https://eu-central-1-shared-euc1-02.cdn.hygraph.com/content/cm9bjc5my00jg07w0pzg0dv0x/master',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImdjbXMtbWFpbi1wcm9kdWN0aW9uIn0.eyJ2ZXJzaW9uIjozLCJpYXQiOjE3NDQzOTM5MzAsImF1ZCI6WyJodHRwczovL2FwaS1ldS1jZW50cmFsLTEtc2hhcmVkLWV1YzEtMDIuaHlncmFwaC5jb20vdjIvY205YmpjNW15MDBqZzA3dzBwemcwZHYweC9tYXN0ZXIiLCJtYW5hZ2VtZW50LW5leHQuZ3JhcGhjbXMuY29tIl0sImlzcyI6Imh0dHBzOi8vbWFuYWdlbWVudC1ldS1jZW50cmFsLTEtc2hhcmVkLWV1YzEtMDIuaHlncmFwaC5jb20vIiwic3ViIjoiMWQ0NTJlNWYtMDhjZi00YjEyLTg2NGYtYjIxZjYzMmYyOWVlIiwianRpIjoiY205ZDMzdjE2MGEyZjA3dzgyemkwNnp2biJ9.hPQdcohced4nSRFLjmBDsEm6QMWJDEWZJQw4ResPHW8rNwblCYOp4EXH367AS2UBJ8YJrsSZzAeQoUdQkUW8d0FzUz95ZebTuypTF8FRf9iBzKRpzop-MctgUqA7XrNaURhSYlRK9CwjIVcjO8QsCnDLf5XBodOTuQiDYEzKQWoazenRpwKyr7my6z-8pT7Mt4XxvUekT4ukYsXsT25r7DalQsCGC-1jhgnkBG_2jJ336LPCbztQpJ0rx2DVbW_b8oFwgZWQowfZ6S0eHJAcYhKMX6i273xVk7dGK7JxWo7b_IznaqncwEY2-tJ-2R_qNmnv11hj520shHAjf_zZsIGbdjrm_y8_Gzh-yg_Smx58LbYdZnGFcsa-edowGrfbtHNjLXVaA5Pvh4BMENWMbnlFR6QKw0YVDJnKPQktq2-fCWitEEt151tmWsOYiOWNnWY4BKmlQ3Gkzymntnt-4b6WtbP6Hh3aXCZrc-U80BSeibvxmW8OpIqCNgEY1hjGkoX_YpZVHmF4d-7s-kj1MmDqizEal2WNrKf4dmrt-gOABrObs5eAzwYpWx7ZX-mVCKTo-Fengm4trAA-_pIHx6JIoC2123UB8-uH6beO52ry1cQhj73k1TzrPYrX1P0rcZQ6b-fHqzzWpV1SsWpJcliV_19QPe_IqcFjIGjxWag',
-          },
-          body: JSON.stringify({
-            query: `
-              query GetProductPage($locale: Locale!) {
-                productPage(where: { slug: "purion-400" }, stage: DRAFT, locales: [$locale]) {
-                  title
-                  heroTitle
-                  heroText
-                  heroImage { url }
-                  body { raw }
-                  gallery { url }
-                  featureHighlight {
-                    title
-                    text { html }
-                    ctatext
-                    ctalink
-                    image { url }
-                  }
-                  countryVariants {
-                    country
-                    recyclingSchedule
-                    localizedContent { html }
-                  }
-                  downloads {
-                    label
-                    file { url }
-                    language
-                  }
-                  sharedRecyclingInfo { raw }
-                  productSpecification {
-                    icon { url }
-                    label
-                    valueImperial
-                    valueMetric
-                  }
-                }
-              }
-            `,
-            variables: { locale }
-          }),
-        }
-      );
-
-      const json = await res.json();
+      const json = await fetcher(GetProductPageQuery, { locale, slug });
       console.log(json);
       if (json.data?.productPage) {
         setData(json.data.productPage as ProductPageData);
@@ -109,6 +68,9 @@ export default function ProductPage() {
 
     fetchData();
  }, [locale]);
+
+
+
 
   if (!data) return <div className="p-10 text-center">Loading preview…</div>;
 
