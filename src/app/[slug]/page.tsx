@@ -14,6 +14,7 @@ import Specifications from '@/components/specifications';
 import RecyclingInfo from '@/components/recycling-info';
 import Footer from '@/components/footer';
 import Downloads from '@/components/downloads';
+import { RichTextWrapper } from '@/components/rich-text-wrapper';
 
 // Bosch logo (hosted externally or locally in your project)
 
@@ -83,6 +84,7 @@ export default function ProductPage({ params }: Props) {
   }, [locale, slug]);
 
 
+    console.log(data);
 
 
   if (!data) return <div className="p-10 text-center">Loading preview…</div>;
@@ -96,9 +98,7 @@ export default function ProductPage({ params }: Props) {
 
         {data.body?.raw && Object.keys(data.body.raw).length > 0 && (
           <section className="py-12 px-6 max-w-3xl mx-auto">
-            <div className="prose prose-lg">
-              <RichText content={data.body.raw} />
-            </div>
+            <RichTextWrapper content={data.body.raw} />
           </section>
         )}
 
