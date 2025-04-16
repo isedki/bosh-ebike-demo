@@ -44,8 +44,8 @@ export default function Home() {
             <NavigationBar />
             <ContextSelector onCountryChange={setSelectedCountry} onLanguageChange={setLocale} />
             <HeroBannerFullScreen 
-                heroTitle={data?.heroBanner.title || 'Welcome'} 
-                heroText={data?.heroBanner.description || 'Discover our products'} 
+                heroTitle={data?.heroBanner.title || ''} 
+                heroText={data?.heroBanner.description || ''} 
                 heroImage={data?.heroBanner.picture ? { url: data.heroBanner.picture.url } : undefined}
                 mimeType={data?.heroBanner.picture?.mimeType}
             />

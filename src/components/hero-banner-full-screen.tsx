@@ -13,7 +13,7 @@ export default function HeroBannerFullScreen({ heroTitle, heroText, heroImage, m
   
   return (
     <>
-      <section className="w-screen h-screen bg-black absolute top-0 left-0 z-0">
+      <section className="w-screen h-screen bg-white absolute top-0 left-0 z-0">
         {isVideo ? (
           <video 
             src={heroImage?.url} 
@@ -29,12 +29,12 @@ export default function HeroBannerFullScreen({ heroTitle, heroText, heroImage, m
             className="w-screen h-screen object-cover" 
           />
         )}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black text-center text-white">
           <h1 className="text-5xl font-bold mb-2">{heroTitle}</h1>
           <p className="text-lg max-w-3xl mx-auto mb-6">{heroText}</p>
         </div>
       </section>
-      <div className="w-screen h-screen bg-black relative hidden top-0 left-0 z-0">
+      <div className="w-screen h-screen bg-white relative hidden top-0 left-0 z-0">
       </div>
     </>
   );
