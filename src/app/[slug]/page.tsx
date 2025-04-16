@@ -7,6 +7,9 @@ import GetProductPageQuery from '@/lib/queries/product-page.gql';
 import { fetcher } from '@/lib/utils';
 import NavigationBar from '@/components/navigation-bar';
 import { ContextSelector } from '@/components/context-selector';
+import HeroBanner from '@/components/hero-banner';
+import Gallery from '@/components/gallery';
+import FeatureHighlight from '@/components/feature-highlight';
 
 // Bosch logo (hosted externally or locally in your project)
 
@@ -85,15 +88,7 @@ export default function ProductPage({ params }: Props) {
       <NavigationBar />
       <ContextSelector onCountryChange={setSelectedCountry} onLanguageChange={setLocale}/>
       <div className="font-sans text-gray-900">
-        <section className="bg-black text-white py-20 px-6 text-center">
-          <h1 className="text-4xl font-bold mb-2">{data.heroTitle}</h1>
-          <p className="text-lg max-w-3xl mx-auto mb-6">{data.heroText}</p>
-          {data.heroImage?.url && (
-            <div className="mx-auto w-full max-w-3xl h-72 overflow-hidden rounded shadow-lg">
-              <img src={data.heroImage.url} alt="Hero" className="w-full h-full object-cover" />
-            </div>
-          )}
-        </section>
+        <HeroBanner heroTitle={data.heroTitle} heroText={data.heroText} heroImage={data.heroImage} />
 
         <section className="py-12 px-6 max-w-3xl mx-auto">
           <div className="prose prose-lg">
@@ -101,50 +96,9 @@ export default function ProductPage({ params }: Props) {
           </div>
         </section>
 
-        {data.gallery?.length > 0 && (
-          <section className="bg-gray-100 py-12 px-6">
-            <h2 className="text-2xl font-semibold text-center mb-6">Gallery</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {data.gallery.map((img, i) => (
-                <img key={i} src={img.url} alt={`Gallery ${i + 1}`} className="rounded-lg shadow object-cover h-64 w-full" />
-              ))}
-            </div>
-          </section>
-        )}
+        <Gallery images={data.gallery} />
 
-        {data.featureHighlight?.length > 0 && (
-          <section className="py-20 px-6 bg-gradient-to-r from-green-200 via-white to-green-100">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-center mb-8 text-green-900">Highlights</h2>
-              <div className="grid md:grid-cols-2 gap-12">
-                {data.featureHighlight.map((feat, i) => (
-                  <div key={i} className="flex flex-col md:flex-row items-center bg-white rounded-lg shadow-lg p-6 gap-6">
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-semibold text-green-800 mb-2">{feat.title || 'Default Feature Title'}</h3>
-                      <div
-                        className="prose prose-sm text-gray-700"
-                        dangerouslySetInnerHTML={{ __html: feat.text?.html || '<p>Default description goes here.</p>' }}
-                      />
-                      {feat.ctatext && feat.ctalink && (
-                        <a
-                          href={feat.ctalink}
-                          className="inline-block mt-4 px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {feat.ctatext}
-                        </a>
-                      )}
-                    </div>
-                    {feat.image?.url && (
-                      <img src={feat.image.url} alt={`Feature ${i}`} className="rounded-lg shadow-md w-48 h-36 object-cover" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        <FeatureHighlight features={data.featureHighlight} />
 
         <section className="py-16 px-6 bg-white">
           <h2 className="text-2xl font-semibold text-center mb-8">Specifications</h2>
