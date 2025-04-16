@@ -108,7 +108,7 @@ export function ContextSelector({
   ];
 
   return (
-    <div className="flex justify-center gap-4 pb-6 md:pt-6 md:absolute top-0 left-[50%] md:translate-x-[-50%]">
+    <div className="flex justify-center gap-4 pb-6 md:pt-6 md:absolute top-0 left-[50%] md:translate-x-[-50%] z-20">
       <CustomDropdown
         options={languageOptions}
         value={locale}

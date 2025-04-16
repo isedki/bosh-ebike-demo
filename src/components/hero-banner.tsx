@@ -7,6 +7,8 @@ interface HeroBannerProps {
 }
 
 export default function HeroBanner({ heroTitle, heroText, heroImage }: HeroBannerProps) {
+
+  console.log(heroImage);
   return (
     <section className="bg-black text-white py-20 px-6 text-center">
       <h1 className="text-4xl font-bold mb-2">{heroTitle}</h1>

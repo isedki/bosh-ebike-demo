@@ -83,6 +83,7 @@ export default function ProductPage({ params }: Props) {
   }, [locale, slug]);
 
 
+    console.log(data);
 
 
   if (!data) return <div className="p-10 text-center">Loading preview…</div>;
