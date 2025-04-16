@@ -22,7 +22,7 @@ interface CountryVariant {
 interface RecyclingInfoProps {
   sharedRecyclingInfo: {
     raw: RichTextContent;
-    text: string;
+    text?: string;
   };
   countryVariants: CountryVariant[];
   selectedCountry: string;
