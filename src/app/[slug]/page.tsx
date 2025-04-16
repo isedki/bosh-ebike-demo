@@ -9,6 +9,11 @@ import { fetcher } from '@/lib/utils';
 // Bosch logo (hosted externally or locally in your project)
 const BOSCH_LOGO = "Bosch-logo-simple.svg";
 
+
+type ProductPage = {
+  productPage: ProductPageData;
+}
+
 type ProductPageData = {
   title: string;
   heroTitle: string;
@@ -45,29 +50,28 @@ type ProductPageData = {
 };
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
-export default function ProductPage({ params: { slug } }: Props) {
+export default function ProductPage({ params }: Props) {
   const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>('de');
   const [selectedCountry, setSelectedCountry] = useState<'fr' | 'de'>('de');
   const [data, setData] = useState<ProductPageData | null>(null);
+  
+  // Unwrap the params promise using React.use()
+  const { slug } = React.use(params);
 
   console.log(slug);
 
   useEffect(() => {
     async function fetchData() {
-      const json = await fetcher(GetProductPageQuery, { locale, slug });
-      console.log(json);
-      if (json.data?.productPage) {
-        setData(json.data.productPage as ProductPageData);
-      }
+      const response = await fetcher<ProductPage>(GetProductPageQuery, { locale, slug });
+      setData(response.productPage);
     }
-
     fetchData();
- }, [locale]);
+ }, [locale, slug]);
 
 
 
