@@ -20,8 +20,9 @@ export default function FeatureHighlight({ features }: FeatureHighlightProps) {
   if (features.length === 0) return null;
 
   return (
-    <section className="py-20 px-6">
+    <section className="py-10 px-6">
       <div className="max-w-6xl mx-auto">
+      <h2 className="text-2xl font-semibold text-center mb-8">Highlights</h2>
         <div className="grid md:grid-cols-2 gap-12">
           {features.map((feat, i) => (
             <div key={i} className="flex items-start gap-6 bg-gray-50 p-6 rounded-lg">
