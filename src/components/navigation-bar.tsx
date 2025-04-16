@@ -5,7 +5,7 @@ const SUPERGRAPHIC = "supergraphic.svg";
 
  useEffect(() => {
     async function fetchNavigation() {
-      const navRes = await fetch(https://eu-central-1-staging.cdn.hygraph.com/content/cm67q55n501yi08uvx7k6atmu/master, {
+      const navRes = await fetch('https://eu-central-1-staging.cdn.hygraph.com/content/cm67q55n501yi08uvx7k6atmu/master', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
