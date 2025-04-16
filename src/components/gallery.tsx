@@ -14,7 +14,7 @@ interface GalleryProps {
   title?: string;
 }
 
-export default function Gallery({ images, title = "Gallery" }: GalleryProps) {
+export default function Gallery({ images, title }: GalleryProps) {
   const [index, setIndex] = useState(-1);
 
   if (images.length === 0) return null;
@@ -22,12 +22,14 @@ export default function Gallery({ images, title = "Gallery" }: GalleryProps) {
   const slides = images.map((image) => ({
     src: image.url,
     alt: image.alt,
+    width: image.width,
+    height: image.height,
   }));
 
   return (
     <section className="bg-gray-100 py-12 px-6">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{title}</h2>
+        {title && <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{title}</h2>}
         <div className="grid grid-cols-4 gap-4">
           {/* First image spanning two columns */}
           <div
@@ -37,7 +39,12 @@ export default function Gallery({ images, title = "Gallery" }: GalleryProps) {
             <img
               src={images[0].url}
               alt={images[0].alt || "Gallery image 1"}
-              className="absolute inset-0 w-full h-full object-cover"
+              width={images[0].width}
+              height={images[0].height}
+              className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
+              loading="eager"
+              decoding="async"
+              style={{ imageRendering: 'crisp-edges', WebkitFontSmoothing: 'antialiased' }}
             />
           </div>
           
@@ -51,7 +58,12 @@ export default function Gallery({ images, title = "Gallery" }: GalleryProps) {
               <img
                 src={image.url}
                 alt={image.alt || `Gallery image ${idx + 2}`}
-                className="absolute inset-0 w-full h-full object-cover"
+                width={image.width}
+                height={image.height}
+                className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+                decoding="async"
+                style={{ imageRendering: 'crisp-edges', WebkitFontSmoothing: 'antialiased' }}
               />
             </div>
           ))}
@@ -62,6 +74,14 @@ export default function Gallery({ images, title = "Gallery" }: GalleryProps) {
           open={index >= 0}
           index={index}
           close={() => setIndex(-1)}
+          carousel={{
+            preload: 3,
+            imageFit: "contain"
+          }}
+          render={{
+            buttonPrev: () => null,
+            buttonNext: () => null
+          }}
         />
       </div>
     </section>
