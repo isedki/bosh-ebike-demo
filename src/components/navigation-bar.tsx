@@ -20,7 +20,7 @@ const [navigationLinks, setNavigationLinks] = useState<{ title: string; slug: st
         body: JSON.stringify({
   query: `
           query MyQuery {
-            navigations(where: {navigationId: "products",stage: DRAFT}) {
+            navigations(where: {navigationId: "products"}, stage: DRAFT) {
               navigationLinks {
                 productPage {
                   title
