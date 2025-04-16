@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const BOSCH_LOGO = "Bosch-logo-simple.svg";
 const SUPERGRAPHIC = "supergraphic.svg";
+const [navigationLinks, setNavigationLinks] = useState<{ title: string; slug: string }[]>([]);
+
 
  useEffect(() => {
     async function fetchNavigation() {
