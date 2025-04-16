@@ -35,6 +35,7 @@ const [navigationLinks, setNavigationLinks] = useState<{ title: string; slug: st
     });
 
     const navJson = await navRes.json();
+    console.log("Navigation Query Response:", navJson);
     const navigation = navJson.data?.navigations?.[0];
 
     if (navigation) {
