@@ -1,5 +1,5 @@
-import { RichText } from "@graphcms/rich-text-react-renderer";
 import { RichTextContent } from "@graphcms/rich-text-types";
+import { RichTextWrapper } from "@/components/rich-text-wrapper";
 
 
 interface RecyclingSchedule {
@@ -22,6 +22,7 @@ interface CountryVariant {
 interface RecyclingInfoProps {
   sharedRecyclingInfo: {
     raw: RichTextContent;
+    text: string;
   };
   countryVariants: CountryVariant[];
   selectedCountry: string;
@@ -32,7 +33,7 @@ export default function RecyclingInfo({
   countryVariants,
   selectedCountry,
 }: RecyclingInfoProps) {
-  const hasShared = sharedRecyclingInfo?.raw && JSON.stringify(sharedRecyclingInfo.raw) !== '{}';
+  const hasShared = sharedRecyclingInfo?.raw && Object.keys(sharedRecyclingInfo.raw).length > 0;
   const filteredVariants = countryVariants.filter((v) =>
     v.country.toLowerCase().includes(selectedCountry)
   );
@@ -45,18 +46,18 @@ export default function RecyclingInfo({
       <section className="py-16 px-6">
         <h2 className="text-2xl font-semibold text-center mb-8">Recycling Info by Region</h2>
 
-        <div className="prose text-sm max-w-4xl mx-auto mb-10">
-          {sharedRecyclingInfo?.raw ? (
-            <RichText content={sharedRecyclingInfo.raw} />
+        <div className="prose text-sm max-w-4xl mx-auto mb-10 text-center">
+          {hasShared ? (
+            <RichTextWrapper content={sharedRecyclingInfo.raw} />
           ) : (
             <p className="text-gray-500 italic">No general recycling information available.</p>
           )}
         </div>
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
           {countryVariants
             .filter((v) => v.country.toLowerCase().includes(selectedCountry))
             .map((v, i) => (
-              <div key={i} className="flex gap-6 bg-gray-50 p-6 rounded-lg">
+              <div key={i} className="flex gap-6 bg-gray-50 p-6 rounded-lg w-full md:w-[calc(33.33%-1rem)] max-w-sm">
                 <div className="flex-1">
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">{v.country}</h4>
                   <div

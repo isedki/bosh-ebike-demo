@@ -44,6 +44,7 @@ const GetProductPageQuery = `
       }
       sharedRecyclingInfo {
         raw
+        text
       }
       productSpecification {
         icon {
