@@ -8,7 +8,11 @@ const GetProductPageQuery = `
         url
       }
       body {
+        json
+        html
+        markdown
         raw
+        text
       }
       gallery {
         url

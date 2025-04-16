@@ -13,6 +13,7 @@ import Specifications from '@/components/specifications';
 import RecyclingInfo from '@/components/recycling-info';
 import Footer from '@/components/footer';
 import Downloads from '@/components/downloads';
+import { RichTextWrapper } from '@/components/rich-text-wrapper';
 
 // Bosch logo (hosted externally or locally in your project)
 const BOSCH_LOGO = "Bosch-logo-simple.svg";
@@ -28,7 +29,7 @@ type ProductPageData = {
   heroTitle: string;
   heroText: string;
   heroImage: { url: string };
-  body: { raw: RichTextContent };
+  body: { raw: RichTextContent, text: string };
   gallery: { url: string }[];
   featureHighlight: {
     title: string;
@@ -85,6 +86,7 @@ const [navigationLabel, setNavigationLabel] = useState<string>('');
   }, [locale, slug]);
 
 
+    console.log(data);
 
   useEffect(() => {
     async function fetchNavigation() {
@@ -168,11 +170,9 @@ const [navigationLabel, setNavigationLabel] = useState<string>('');
       <div className="font-sans text-gray-900">
         <HeroBanner heroTitle={data.heroTitle} heroText={data.heroText} heroImage={data.heroImage} />
 
-        {data.body?.raw && Object.keys(data.body.raw).length > 0 && (
+        {data.body?.raw && Object.keys(data.body.raw).length > 0 && data.body.text !== ""&& (
           <section className="py-12 px-6 max-w-3xl mx-auto">
-            <div className="prose prose-lg">
-              <RichText content={data.body.raw} />
-            </div>
+            <RichTextWrapper content={data.body.raw} />
           </section>
         )}
 
