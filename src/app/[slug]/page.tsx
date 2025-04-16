@@ -17,7 +17,7 @@ import { RichTextWrapper } from '@/components/rich-text-wrapper';
 import NavigationBar from '@/components/navigation-bar';
 
 // Bosch logo (hosted externally or locally in your project)
-const BOSCH_LOGO = "Bosch-logo-simple.svg";
+const BOSCH_LOGO = "bosch-logo-simple.svg";
 const SUPERGRAPHIC = "supergraphic.svg";
 
 

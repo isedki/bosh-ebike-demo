@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { fetcher } from '@/lib/utils';
 import GetNavigationQuery from '@/lib/queries/navigation';
 
-const BOSCH_LOGO = "Bosch-logo-simple.svg";
+const BOSCH_LOGO = "bosch-logo-simple.svg";
 const SUPERGRAPHIC = "supergraphic.svg";
 
 export const NavigationBar = () => {
