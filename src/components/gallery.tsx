@@ -46,7 +46,10 @@ export default function Gallery({ images, title }: GalleryProps) {
               decoding="async"
               style={{ 
                 WebkitFontSmoothing: 'antialiased',
-                backfaceVisibility: 'hidden'
+                backfaceVisibility: 'hidden',
+                imageRendering: 'auto',
+                filter: 'blur(0.5px)',
+                transform: 'translateZ(0)'
               }}
             />
           </div>
@@ -68,7 +71,10 @@ export default function Gallery({ images, title }: GalleryProps) {
                 decoding="async"
                 style={{ 
                   WebkitFontSmoothing: 'antialiased',
-                  backfaceVisibility: 'hidden'
+                  backfaceVisibility: 'hidden',
+                  imageRendering: 'auto',
+                  filter: 'blur(0.5px)',
+                  transform: 'translateZ(0)'
                 }}
               />
             </div>

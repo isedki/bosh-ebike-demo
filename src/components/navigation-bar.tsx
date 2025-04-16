@@ -60,7 +60,7 @@ fetchNavigation();
   return (
     <div className="relative z-20 bg-white">
       <header className="p-6 flex items-center justify-between max-w-screen-2xl mx-auto">
-        <img src={SUPERGRAPHIC} alt="Bosch Supergraphic" className="h-2 w-full absolute top-0 left-0 " />
+        <img src={SUPERGRAPHIC} alt="Bosch Supergraphic" className="h-2 w-screen absolute top-0 left-0 right-0" />
         <div className="flex items-center space-x-4 max-w-[150px]">
           <a href="/">
             <img src={BOSCH_LOGO} alt="Bosch Logo" className="h-10" />
