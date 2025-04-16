@@ -10,6 +10,7 @@ import { ContextSelector } from '@/components/context-selector';
 import HeroBanner from '@/components/hero-banner';
 import Gallery from '@/components/gallery';
 import FeatureHighlight from '@/components/feature-highlight';
+import Specifications from '@/components/Specifications';
 
 // Bosch logo (hosted externally or locally in your project)
 
@@ -100,22 +101,9 @@ export default function ProductPage({ params }: Props) {
 
         <FeatureHighlight features={data.featureHighlight} />
 
-        <section className="py-16 px-6 bg-white">
-          <h2 className="text-2xl font-semibold text-center mb-8">Specifications</h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {data.productSpecification?.map((spec, i) => (
-              <div key={i} className="flex items-center bg-gray-50 rounded-lg shadow-sm p-4">
-                {spec.icon?.url && <img src={spec.icon.url} alt="icon" className="w-12 h-12 mr-4" />}
-                <div>
-                  <p className="text-sm text-gray-600">{spec.label}</p>
-                  <p className="text-md font-semibold">
-                    {spec.valueMetric} <span className="text-gray-400">/ {spec.valueImperial}</span>
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <Specifications specifications={data.productSpecification} />
+
+        
 
         <div className="font-sans text-gray-900">
           <section className="py-16 px-6 bg-gray-100">
