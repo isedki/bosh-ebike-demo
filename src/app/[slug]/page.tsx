@@ -10,7 +10,8 @@ import { ContextSelector } from '@/components/context-selector';
 import HeroBanner from '@/components/hero-banner';
 import Gallery from '@/components/gallery';
 import FeatureHighlight from '@/components/feature-highlight';
-import Specifications from '@/components/Specifications';
+import Specifications from '@/components/specifications';
+import RecyclingInfo from '@/components/recycling-info';
 
 // Bosch logo (hosted externally or locally in your project)
 
@@ -103,48 +104,11 @@ export default function ProductPage({ params }: Props) {
 
         <Specifications specifications={data.productSpecification} />
 
-        
-
-        <div className="font-sans text-gray-900">
-          <section className="py-16 px-6 bg-gray-100">
-            <h2 className="text-2xl font-semibold text-center mb-8">Recycling Info by Region</h2>
-
-
-            <div className="prose text-sm max-w-4xl mx-auto mb-10">
-              <RichText content={data.sharedRecyclingInfo.raw} />
-            </div>
-
-
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {data.countryVariants
-                .filter((v) => v.country.toLowerCase().includes(selectedCountry))
-                .map((v, i) => (
-                  <div key={i} className="bg-white p-6 rounded shadow text-sm">
-                    <h4 className="text-lg font-bold mb-2 uppercase">{v.country}</h4>
-                    <div
-                      className="prose text-sm"
-                      dangerouslySetInnerHTML={{ __html: v.localizedContent?.html || '' }}
-                    />
-                    {typeof v.recyclingSchedule === 'string' ? (
-                      <p className="mt-2 text-gray-500">Schedule: {v.recyclingSchedule}</p>
-                    ) : (
-                      <div className="mt-2 text-gray-500">
-                        <h5 className="font-semibold">{v.recyclingSchedule.title}</h5>
-                        <ul className="list-disc list-inside">
-                          {v.recyclingSchedule.schedule.map((entry, idx) => (
-                            <li key={idx}>
-                              {entry.item}: {entry.day}
-                            </li>
-                          ))}
-                        </ul>
-                        <p className="text-sm italic mt-2">{v.recyclingSchedule.note}</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-            </div>
-          </section>
-        </div>
+        <RecyclingInfo 
+          sharedRecyclingInfo={data.sharedRecyclingInfo}
+          countryVariants={data.countryVariants}
+          selectedCountry={selectedCountry}
+        />
 
         {data.downloads?.length > 0 && (
           <section className="py-16 px-6 max-w-6xl mx-auto">
