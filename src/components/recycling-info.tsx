@@ -28,6 +28,7 @@ interface RecyclingInfoProps {
 }
 
 export default function RecyclingInfo({ sharedRecyclingInfo, countryVariants, selectedCountry }: RecyclingInfoProps) {
+  if (!RecyclingInfoProps || RecyclingInfoProps.length === 0) return null;
   return (
     <div className="font-sans text-gray-900">
       <section className="py-16 px-6 bg-gray-100">
