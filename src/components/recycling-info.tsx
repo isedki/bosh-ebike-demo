@@ -34,9 +34,12 @@ export default function RecyclingInfo({ sharedRecyclingInfo, countryVariants, se
         <h2 className="text-2xl font-semibold text-center mb-8">Recycling Info by Region</h2>
 
         <div className="prose text-sm max-w-4xl mx-auto mb-10">
-          <RichText content={sharedRecyclingInfo.raw} />
+          {sharedRecyclingInfo?.raw ? (
+            <RichText content={sharedRecyclingInfo.raw} />
+          ) : (
+            <p className="text-gray-500 italic">No general recycling information available.</p>
+          )}
         </div>
-
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {countryVariants
             .filter((v) => v.country.toLowerCase().includes(selectedCountry))
