@@ -29,7 +29,7 @@ type ProductPageData = {
   heroTitle: string;
   heroText: string;
   heroImage: { url: string };
-  body: { raw: RichTextContent };
+  body: { raw: RichTextContent, text: string };
   gallery: { url: string }[];
   featureHighlight: {
     title: string;
@@ -96,7 +96,7 @@ export default function ProductPage({ params }: Props) {
       <div className="font-sans text-gray-900">
         <HeroBanner heroTitle={data.heroTitle} heroText={data.heroText} heroImage={data.heroImage} />
 
-        {data.body?.raw && Object.keys(data.body.raw).length > 0 && (
+        {data.body?.raw && Object.keys(data.body.raw).length > 0 && data.body.text !== ""&& (
           <section className="py-12 px-6 max-w-3xl mx-auto">
             <RichTextWrapper content={data.body.raw} />
           </section>

@@ -5,8 +5,8 @@ import "yet-another-react-lightbox/styles.css";
 interface GalleryImage {
   url: string;
   alt?: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
 interface GalleryProps {
@@ -67,7 +67,6 @@ export default function Gallery({ images, title }: GalleryProps) {
                 loading="lazy"
                 decoding="async"
                 style={{ 
-                  imageRendering: 'smooth',
                   WebkitFontSmoothing: 'antialiased',
                   backfaceVisibility: 'hidden'
                 }}

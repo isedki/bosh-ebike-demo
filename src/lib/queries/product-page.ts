@@ -12,6 +12,7 @@ const GetProductPageQuery = `
         html
         markdown
         raw
+        text
       }
       gallery {
         url
