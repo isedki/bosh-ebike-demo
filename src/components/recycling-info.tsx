@@ -32,7 +32,7 @@ export default function RecyclingInfo({
   countryVariants,
   selectedCountry,
 }: RecyclingInfoProps) {
-  const hasShared = sharedRecyclingInfo?.raw?.children?.length > 0;
+  const hasShared = sharedRecyclingInfo?.raw && JSON.stringify(sharedRecyclingInfo.raw) !== '{}';
   const filteredVariants = countryVariants.filter((v) =>
     v.country.toLowerCase().includes(selectedCountry)
   );
