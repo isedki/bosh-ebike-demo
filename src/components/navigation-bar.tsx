@@ -20,7 +20,10 @@ export const NavigationBar = () => {
       if (navigation) {
         setNavigationLabel(navigation.navigationId);
         setNavigationLinks(
-          navigation.navigationLinks.map((link) => link.productPage)
+          navigation.navigationLinks.map((link) => ({
+            ...link.productPage,
+            title: link.productPage.title.charAt(0).toUpperCase() + link.productPage.title.slice(1)
+          }))
         );
       }
     }
@@ -39,20 +42,22 @@ export const NavigationBar = () => {
         </div>
         <nav className="flex gap-6 font-medium">
           <div className="relative group">
-            <span className="text-gray-700 font-bold cursor-pointer">{navigationLabel}</span>
-            <div className="absolute left-0 mt-2 hidden group-hover:flex flex-col bg-white shadow-lg rounded z-20">
+            <div className="flex items-center">
+              <span className="text-gray-700 font-bold cursor-pointer group-hover:text-[#E2001A] transition-colors duration-200">{navigationLabel.charAt(0).toUpperCase() + navigationLabel.slice(1)}</span>
+            </div>
+            <div className="absolute left-0 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col bg-white shadow-lg rounded-lg z-20 min-w-[200px] border border-black overflow-hidden">
               {navigationLinks.map((link, i) => (
                 <Link
                   key={i}
                   href={`/${link.slug}`}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="px-4 py-2 text-sm text-gray-700 hover:text-[#E2001A] hover:bg-gray-50 transition-colors duration-200"
                 >
                   {link.title}
                 </Link>
               ))}
             </div>
           </div>
-          <Link href="#" className="text-gray-700 hover:text-black">Technology</Link>
+          <Link href="#" className="text-gray-700 hover:text-[#E2001A] transition-colors duration-200">Technology</Link>
         </nav>
       </header>
     </div>
