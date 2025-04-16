@@ -77,7 +77,7 @@ function CustomDropdown({ options, value, onChange, icon, className = '' }: Cust
 export function ContextSelector({
   onLanguageChange,
   onCountryChange,
-  initialLanguage = 'de',
+  initialLanguage = 'en',
   initialCountry = 'de'
 }: LocaleSelectorProps) {
   const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>(initialLanguage);
