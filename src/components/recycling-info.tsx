@@ -27,8 +27,19 @@ interface RecyclingInfoProps {
   selectedCountry: string;
 }
 
-export default function RecyclingInfo({ sharedRecyclingInfo, countryVariants, selectedCountry }: RecyclingInfoProps) {
-  if (!RecyclingInfoProps || RecyclingInfoProps.length === 0) return null;
+export default function RecyclingInfo({
+  sharedRecyclingInfo,
+  countryVariants,
+  selectedCountry,
+}: RecyclingInfoProps) {
+  const hasShared = sharedRecyclingInfo?.raw?.children?.length > 0;
+  const filteredVariants = countryVariants.filter((v) =>
+    v.country.toLowerCase().includes(selectedCountry)
+  );
+  const hasLocalized = filteredVariants.length > 0;
+
+  if (!hasShared && !hasLocalized) return null;
+  
   return (
     <div className="font-sans text-gray-900">
       <section className="py-16 px-6 bg-gray-100">
