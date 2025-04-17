@@ -16,6 +16,7 @@ interface CountryVariant {
   localizedContent?: {
     html: string;
   };
+  flag: url;
   recyclingSchedule: string | RecyclingSchedule;
 }
 
@@ -60,6 +61,11 @@ export default function RecyclingInfo({
               <div key={i} className="flex gap-6 bg-gray-50 p-6 rounded-lg w-full md:w-[calc(33.33%-1rem)] max-w-sm">
                 <div className="flex-1">
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">{v.country}</h4>
+                                {v.flag?.url && (
+                <div className="w-24 h-24 flex-shrink-0 text-gray-900">
+                  <img src={v.flag.url} alt="icon" className="w-full h-full object-contain" />
+                </div>
+              )}
                   <div
                     className="text-gray-600"
                     dangerouslySetInnerHTML={{ __html: v.localizedContent?.html || '' }}
