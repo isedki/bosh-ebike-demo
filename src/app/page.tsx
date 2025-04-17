@@ -25,7 +25,7 @@ type HomePage = {
 export default function Home() {
 
     const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>('en');
-    const [selectedCountry, setSelectedCountry] = useState<'fr' | 'de'>('fr');
+    const [selectedCountry, setSelectedCountry] = useState<'france' | 'germany'>('france');
 
     const [data, setData] = useState<HomePageData | null>(null);
 
