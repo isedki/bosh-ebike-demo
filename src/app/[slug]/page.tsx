@@ -69,7 +69,7 @@ type Props = {
 
 export default function ProductPage({ params }: Props) {
   const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>('en');
-  const [selectedCountry, setSelectedCountry] = useState<'fr' | 'de'>('fr');
+  const [selectedCountry, setSelectedCountry] = useState<'france' | 'germany'>('france');
   const [data, setData] = useState<ProductPageData | null>(null);
 
   // Unwrap the params promise using React.use()
