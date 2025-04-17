@@ -65,7 +65,7 @@ export default function RecyclingInfo({
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">{v.country}</h4>
                                 {v.flag?.url && (
                 <div className="w-24 h-24 flex-shrink-0 text-gray-900">
-                  <img src={v.flag.url} alt="icon" className="w-full h-full object-contain" />
+                  <img src={v.flag.url} alt="icon" className="w-full h-full object-contain" />--
                 </div>
               )}
                   <div
