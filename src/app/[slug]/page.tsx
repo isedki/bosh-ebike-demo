@@ -53,6 +53,7 @@ type ProductPageData = {
   sharedRecyclingInfo: { raw: RichTextContent };
   countryVariants: {
     country: string;
+    flag: { url: string };
     recyclingSchedule: string | { title: string; note: string; schedule: { item: string; day: string }[] };
     localizedContent: {
       html: string;
