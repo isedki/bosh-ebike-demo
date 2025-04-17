@@ -16,7 +16,9 @@ interface CountryVariant {
   localizedContent?: {
     html: string;
   };
-  flag: url;
+  flag?: {
+    url: string;
+  };
   recyclingSchedule: string | RecyclingSchedule;
 }
 
