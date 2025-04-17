@@ -34,6 +34,7 @@ const GetProductPageQuery = `
         localizedContent {
           html
         }
+	flag {url}
       }
       downloads {
         label

@@ -29,13 +29,21 @@ export default function Home() {
 
     const [data, setData] = useState<HomePageData | null>(null);
 
-    useEffect(() => {
-        async function fetchData() {
-          const response = await fetcher<HomePage>(GetHomePageQuery, { locale });
-          setData(response.homePages[0]);
-        }
-        fetchData();
-      }, [locale]);
+useEffect(() => {
+  console.log('useEffect triggered with locale:', locale);
+  async function fetchData() {
+    try {
+      console.log('Starting fetch from Hygraph...');
+      const response = await fetcher<HomePage>(GetHomePageQuery, { locale });
+      console.log('Fetched data:', response);
+      setData(response.homePages[0]);
+    } catch (err) {
+      console.error('Fetch error:', err);
+    }
+  }
+
+  fetchData();
+}, [locale]);
 
       console.log(data);
 

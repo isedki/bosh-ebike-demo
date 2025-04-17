@@ -3,9 +3,9 @@ import { FaGlobe, FaMapMarkerAlt, FaChevronDown } from 'react-icons/fa';
 
 interface LocaleSelectorProps {
   onLanguageChange: (locale: 'en' | 'de' | 'fr' | 'it') => void;
-  onCountryChange: (country: 'fr' | 'de') => void;
+  onCountryChange: (country: 'france' | 'germany') => void;
   initialLanguage?: 'en' | 'de' | 'fr' | 'it';
-  initialCountry?: 'fr' | 'de';
+  initialCountry?: 'france' | 'germany';
 }
 
 interface DropdownOption {
@@ -78,10 +78,10 @@ export function ContextSelector({
   onLanguageChange,
   onCountryChange,
   initialLanguage = 'en',
-  initialCountry = 'de'
+  initialCountry = 'france'
 }: LocaleSelectorProps) {
   const [locale, setLocale] = useState<'en' | 'de' | 'fr' | 'it'>(initialLanguage);
-  const [selectedCountry, setSelectedCountry] = useState<'fr' | 'de'>(initialCountry);
+  const [selectedCountry, setSelectedCountry] = useState<'france' | 'germany'>(initialCountry);
 
   const handleLanguageChange = (value: string) => {
     const newLocale = value as 'en' | 'de' | 'fr' | 'it';
@@ -90,7 +90,7 @@ export function ContextSelector({
   };
 
   const handleCountryChange = (value: string) => {
-    const newCountry = value as 'fr' | 'de';
+    const newCountry = value as 'france' | 'germany';
     setSelectedCountry(newCountry);
     onCountryChange(newCountry);
   };
@@ -103,8 +103,8 @@ export function ContextSelector({
   ];
 
   const countryOptions: DropdownOption[] = [
-    { value: 'de', label: 'Germany' },
-    { value: 'fr', label: 'France' },
+    { value: 'germany', label: 'Germany' },
+    { value: 'france', label: 'France' },
   ];
 
   return (
