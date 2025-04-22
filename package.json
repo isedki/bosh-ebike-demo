@@ -11,6 +11,7 @@
   "dependencies": {
     "@graphcms/rich-text-react-renderer": "^0.6.2",
     "@graphcms/rich-text-types": "^0.5.1",
+    "@hygraph/live-preview-sdk": "^1.0.4",
     "he": "^1.2.0",
     "lightgallery": "^2.8.3",
     "next": "15.3.0",

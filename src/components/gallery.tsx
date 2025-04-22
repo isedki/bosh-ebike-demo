@@ -12,9 +12,10 @@ interface GalleryImage {
 interface GalleryProps {
   images: GalleryImage[];
   title?: string;
+  entryId?: string;
 }
 
-export default function Gallery({ images, title }: GalleryProps) {
+export default function Gallery({ images, title, entryId }: GalleryProps) {
   const [index, setIndex] = useState(-1);
 
   if (images.length === 0) return null;
@@ -29,8 +30,17 @@ export default function Gallery({ images, title }: GalleryProps) {
   return (
     <section className="bg-white py-12 px-6">
       <div className="max-w-7xl mx-auto">
-        {title && <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{title}</h2>}
-        <div className="grid grid-cols-4 gap-4">
+        {title && (
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+            {title}
+          </h2>
+        )}
+        <div
+          className="grid grid-cols-4 gap-4"
+          data-hygraph-entry-id={entryId}
+          data-hygraph-field-api-id="gallery"
+          data-hygraph-entry-locale="en"
+        >
           {/* First image spanning two columns */}
           <div
             className="col-span-2 row-span-2 relative aspect-square overflow-hidden rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
@@ -44,16 +54,16 @@ export default function Gallery({ images, title }: GalleryProps) {
               className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
               loading="eager"
               decoding="async"
-              style={{ 
-                WebkitFontSmoothing: 'antialiased',
-                backfaceVisibility: 'hidden',
-                imageRendering: 'auto',
-                filter: 'blur(0.5px)',
-                transform: 'translateZ(0)'
+              style={{
+                WebkitFontSmoothing: "antialiased",
+                backfaceVisibility: "hidden",
+                imageRendering: "auto",
+                filter: "blur(0.5px)",
+                transform: "translateZ(0)",
               }}
             />
           </div>
-          
+
           {/* Rest of the images */}
           {images.slice(1).map((image, idx) => (
             <div
@@ -69,12 +79,12 @@ export default function Gallery({ images, title }: GalleryProps) {
                 className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
                 loading="lazy"
                 decoding="async"
-                style={{ 
-                  WebkitFontSmoothing: 'antialiased',
-                  backfaceVisibility: 'hidden',
-                  imageRendering: 'auto',
-                  filter: 'blur(0.5px)',
-                  transform: 'translateZ(0)'
+                style={{
+                  WebkitFontSmoothing: "antialiased",
+                  backfaceVisibility: "hidden",
+                  imageRendering: "auto",
+                  filter: "blur(0.5px)",
+                  transform: "translateZ(0)",
                 }}
               />
             </div>
@@ -88,11 +98,11 @@ export default function Gallery({ images, title }: GalleryProps) {
           close={() => setIndex(-1)}
           carousel={{
             preload: 3,
-            imageFit: "contain"
+            imageFit: "contain",
           }}
           render={{
             buttonPrev: () => null,
-            buttonNext: () => null
+            buttonNext: () => null,
           }}
         />
       </div>
