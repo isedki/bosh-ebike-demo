@@ -1,6 +1,7 @@
 const GetProductPageQuery = `
   query GetProductPage($locale: Locale!, $slug: String!) {
     productPage(where: { slug: $slug }, stage: DRAFT, locales: [$locale]) {
+      id
       title
       heroTitle
       heroText
