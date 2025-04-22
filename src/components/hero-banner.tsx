@@ -35,12 +35,7 @@ export default function HeroBanner({
           </p>
         </div>
         {heroImage?.url && (
-          <div
-            className="mx-auto w-full max-w-4xl h-96 overflow-hidden rounded-2xl shadow-lg transform hover:scale-[1.02] transition-transform duration-300"
-            data-hygraph-entry-id={entryId}
-            data-hygraph-field-api-id="heroImage"
-            data-hygraph-entry-locale="en"
-          >
+          <div className="mx-auto w-full max-w-4xl h-96 overflow-hidden rounded-2xl shadow-lg transform hover:scale-[1.02] transition-transform duration-300">
             <img
               src={heroImage.url}
               alt="Hero"
